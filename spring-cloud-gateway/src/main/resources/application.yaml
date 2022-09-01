@@ -1,0 +1,30 @@
+server:
+  port: 9091 
+  
+spring:
+  application:
+    name: spring-cloud-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: cartService
+        uri: lb://CART-SERVICE
+        predicates:
+        - Path=/cart/**
+      - id: productService
+        uri: lb://PRODUCT-SERVICE
+        predicates:
+        - Path=/product/**
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 5s
+        
+management.endpoints.web.exposure.include: "*"
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+  
+  
+
