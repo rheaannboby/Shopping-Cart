@@ -23,12 +23,12 @@ public class ProductResource {
 	@Autowired
 	private ProductService service;
 	
-	@PostMapping()
+	@PostMapping
 	public void addProduct(@RequestBody Product product){
 		service.addProduct(product);
 	}
 	
-	@GetMapping()
+	@GetMapping
 	public List<Product> getAllProducts(){
 		return service.getAllProducts();
 	}
@@ -43,7 +43,7 @@ public class ProductResource {
 		return service.getProductByName(name);
 	}
 	
-	@PutMapping()
+	@PutMapping
 	public Product updateProduct(@RequestBody Product product){
 		return service.updateProduct(product);
 	}
