@@ -18,49 +18,49 @@ import com.capg.productservice.service.ProductService;
 
 @RestController
 @RequestMapping("/product")
-public class ProductResource {
+public class ProductController {
 	
 	@Autowired
-	private ProductService service;
+	private ProductService productService;
 	
 	@PostMapping
 	public void addProduct(@RequestBody Product product){
-		service.addProduct(product);
+		productService.addProduct(product);
 	}
 	
 	@GetMapping
 	public List<Product> getAllProducts(){
-		return service.getAllProducts();
+		return productService.getAllProducts();
 	}
 	
 	@GetMapping("/id/{productId}")
 	public Product getProductById(@PathVariable(value="productId") int id){
-		return service.getProductById(id);
+		return productService.getProductById(id);
 	}
 	
 	@GetMapping("/name/{productName}")
 	public Product getProductByName(@PathVariable(value="productName") String name){
-		return service.getProductByName(name);
+		return productService.getProductByName(name);
 	}
 	
 	@PutMapping
 	public Product updateProduct(@RequestBody Product product){
-		return service.updateProduct(product);
+		return productService.updateProduct(product);
 	}
 	
 	@DeleteMapping("/{productId}")
 	public void deleteProductById(@PathVariable(value = "productId") int id){
-		service.deleteProductById(id);
+		productService.deleteProductById(id);
 	}
 	
 	@GetMapping("/category/{category}")
 	public List<Product> getProductByCategory(@PathVariable(value="category") String category){
-		return service.getProductByCategory(category);
+		return productService.getProductByCategory(category);
 	}
 	
 	@GetMapping("/type/{productType}")
 	public List<Product> getProductByType(@PathVariable(value="productType") String type){
-		return service.getProductByType(type);
+		return productService.getProductByType(type);
 	}
 
 }
