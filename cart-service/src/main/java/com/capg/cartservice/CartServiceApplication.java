@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.client.RestTemplate;
 
 import com.capg.cartservice.model.Cart;
 import com.capg.cartservice.repository.CartRepository;
@@ -16,6 +19,12 @@ import com.capg.cartservice.repository.CartRepository;
 @SpringBootApplication
 @EnableEurekaClient
 public class CartServiceApplication{
+	
+	@Bean
+	@LoadBalanced
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();	
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CartServiceApplication.class, args);

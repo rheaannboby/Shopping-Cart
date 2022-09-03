@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.capg.cartservice.model.Cart;
 import com.capg.cartservice.model.Item;
@@ -14,6 +15,9 @@ import com.capg.cartservice.repository.CartRepository;
 @Service
 public class CartServiceImpl implements CartService{
 
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	@Autowired
 	private CartRepository cartRepository;
 	
@@ -32,7 +36,6 @@ public class CartServiceImpl implements CartService{
 	public Cart addToCart(Integer id, Item newItem) {
 		Cart cart;
 		if(!cartRepository.existsById(id)) {
-			System.err.println(cartRepository.existsById(id));
 			cart = new Cart();
 			cart.setCartId(id);
 		}
@@ -47,8 +50,6 @@ public class CartServiceImpl implements CartService{
 		cart.setListOfItems(items);
 		cart.setTotalPrice(cartTotal(cart));
 		Cart savedCart = cartRepository.save(cart);
-		System.out.println(savedCart);
-		System.out.println(cart);
 		return savedCart;
 	}
 
@@ -63,7 +64,8 @@ public class CartServiceImpl implements CartService{
 			}
 		}
 		cart.setTotalPrice(cartTotal(cart));
-		return cartRepository.save(cart);		
+		Cart upCart = cartRepository.save(cart);
+		return upCart;
 	}
 
 	@Override

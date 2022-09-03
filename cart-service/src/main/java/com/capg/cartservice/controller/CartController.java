@@ -18,34 +18,34 @@ import com.capg.cartservice.service.CartService;
 
 @RestController
 @RequestMapping("/cart")
-public class CartResource {
+public class CartController {
 	
 	@Autowired
-	private CartService service;
+	private CartService cartService;
 	
 	@GetMapping("/{cartId}")
 	public Cart getCartById(@PathVariable(value = "cartId") Integer id){
-		return service.getCartById(id);
+		return cartService.getCartById(id);
 	}
 	
 	@GetMapping("/{cartId}/items")
 	public List<Item> getAllItems(@PathVariable(value = "cartId") Integer id){
-		return service.getAllItems(id);
+		return cartService.getAllItems(id);
 	}
 	
 	@PostMapping("/{cartId}")
 	public Cart addToCart(@PathVariable(value = "cartId") Integer id,@RequestBody Item item){
-		return service.addToCart(id,item);
+		return cartService.addToCart(id,item);
 	}
 	
 	@PutMapping("/{cartId}")
 	public void updateInCart(@PathVariable(value = "cartId") Integer id,@RequestBody Item item){
-		service.updateInCart(id,item);
+		cartService.updateInCart(id,item);
 	}
 	
 	@DeleteMapping("/{cartId}")
 	public void deleteFromCart(@PathVariable(value = "cartId") Integer id,@RequestBody Item item){
-		service.deleteFromCart(id,item.getItemId());
+		cartService.deleteFromCart(id,item.getItemId());
 	}
 
 
