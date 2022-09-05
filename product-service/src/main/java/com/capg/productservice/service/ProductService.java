@@ -8,7 +8,7 @@ import com.capg.productservice.model.Product;
 
 @Service
 public interface ProductService {
-	public abstract void addProduct(Product product);
+	public abstract Product addProduct(Product product);
 	public abstract List<Product> getAllProducts();
 	public abstract Product getProductById(int productId);
 	public abstract Product getProductByName(String productName);
