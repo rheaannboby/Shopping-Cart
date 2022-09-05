@@ -1,4 +1,4 @@
-package com.capg.profileservice.model;
+package com.capg.orderservice.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +7,12 @@ import lombok.Setter;
 import lombok.ToString;
 
 public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString class Address {
+	
+	private Integer customerId;
+	
+	private String fullName;
+	
+	private Long mobileNumber;
 	
 	private int houseNumber;
 	
