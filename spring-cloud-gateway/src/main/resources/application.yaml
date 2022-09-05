@@ -15,6 +15,10 @@ spring:
         uri: lb://PRODUCT-SERVICE
         predicates:
         - Path=/product/**
+      - id: productService
+        uri: lb://PROFILE-SERVICE
+        predicates:
+        - Path=/profile/**
       httpclient:
         connect-timeout: 1000
         response-timeout: 5s
