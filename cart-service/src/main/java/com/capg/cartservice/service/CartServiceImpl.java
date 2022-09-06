@@ -14,9 +14,6 @@ import com.capg.cartservice.repository.CartRepository;
 
 @Service
 public class CartServiceImpl implements CartService{
-
-	@Autowired
-	private RestTemplate restTemplate;
 	
 	@Autowired
 	private CartRepository cartRepository;
@@ -48,7 +45,7 @@ public class CartServiceImpl implements CartService{
 		}
 		items.add(new Item(newItem));
 		cart.setListOfItems(items);
-		cart.setTotalPrice(cartTotal(cart));
+		cart.setTotalPrice(cart.getTotalPrice()+(newItem.getPrice()*newItem.getQuantity()));
 		Cart savedCart = cartRepository.save(cart);
 		return savedCart;
 	}
@@ -56,35 +53,34 @@ public class CartServiceImpl implements CartService{
 	@Override
 	public Cart updateInCart(Integer id, Item item) {
 		Cart cart = cartRepository.findByCartId(id);
+		int oldQuantity = 0;
 		for(Item itm : cart.getListOfItems()) {
 			if(itm.getItemId().compareTo(item.getItemId())==0) {
 				int index = cart.getListOfItems().indexOf(itm);
+				oldQuantity = cart.getListOfItems().get(index).getQuantity();
 				cart.getListOfItems().get(index).setQuantity(item.getQuantity());
 				break;
 			}
 		}
-		cart.setTotalPrice(cartTotal(cart));
+		cart.setTotalPrice(cart.getTotalPrice() + (item.getQuantity() - oldQuantity)*item.getPrice());
 		Cart upCart = cartRepository.save(cart);
 		return upCart;
 	}
 
 	@Override
-	public Cart deleteFromCart(Integer id,Integer itemId) {
+	public Cart deleteFromCart(Integer id,Item delItem) {
 		Cart cart = cartRepository.findByCartId(id);
+		int qty = 0;
 		for(Item item : cart.getListOfItems()) {
-			if(item.getItemId().compareTo(itemId)==0) {
+			if(item.getItemId().compareTo(delItem.getItemId())==0) {
+				int index = cart.getListOfItems().indexOf(item);
+				qty = cart.getListOfItems().get(index).getQuantity();
 				cart.getListOfItems().remove(item);
 				break;
 			}
 		}
-		cart.setTotalPrice(cartTotal(cart));
+		cart.setTotalPrice(cart.getTotalPrice() - (qty*delItem.getPrice()));
 		return cartRepository.save(cart);		
 	}
-
-	public double cartTotal(Cart cart) {
-		return cart.getListOfItems().stream().map(item -> (item.getPrice()*item.getQuantity()))
-				.collect(Collectors.summingDouble(Double::doubleValue));
-	}
-
 
 }

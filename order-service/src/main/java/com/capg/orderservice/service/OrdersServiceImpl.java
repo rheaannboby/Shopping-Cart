@@ -40,7 +40,6 @@ public class OrdersServiceImpl implements OrdersService{
 		}).collect(Collectors.toList());
 		
 		for(Orders order : orders) {
-			System.err.println(order);
 			orderRepository.save(order);
 		}
 		
