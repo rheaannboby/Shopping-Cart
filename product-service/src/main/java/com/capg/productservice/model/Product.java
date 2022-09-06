@@ -30,6 +30,9 @@ public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString class Pr
 	private String category;
 	
 	@Field
+	private Integer quantity;
+	
+	@Field
 	private Map<Integer,Double> rating;
 	
 	@Field

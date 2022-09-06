@@ -15,4 +15,5 @@ public interface CartService {
 	public abstract Cart addToCart(Integer id,Item item);
 	public abstract Cart updateInCart(Integer id,Item item);
 	public abstract Cart deleteFromCart(Integer id,Item item);
+	public abstract Cart clearCart(Integer id);
 }

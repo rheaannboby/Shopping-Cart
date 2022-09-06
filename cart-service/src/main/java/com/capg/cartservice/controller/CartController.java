@@ -71,6 +71,11 @@ public class CartController {
 		item.setPrice(product.getPrice());
 		cartService.deleteFromCart(id,item);
 	}
+	
+	@DeleteMapping("/all/{cartId}")
+	public void clearCart(@PathVariable(value = "cartId") Integer id){
+		cartService.clearCart(id);
+	}
 
 
 }

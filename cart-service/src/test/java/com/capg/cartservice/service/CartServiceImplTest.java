@@ -108,6 +108,9 @@ class CartServiceImplTest {
 		@DisplayName("Verifying if methods are called in order 1")
 		void testAddToCart1() {
 			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			List<Item> items = new ArrayList<Item>();
+			items.add(newItem);
+			Cart cart = new Cart(102, items, 18000.0);
 			when(cartRepository.existsById(any(Integer.class))).thenReturn(false);
 			cartService.addToCart(102, newItem);
 			InOrder inOrder = inOrder(cartRepository);
@@ -201,6 +204,7 @@ class CartServiceImplTest {
 			Item updatedItem = new Item();
 			updatedItem.setItemId(101);
 			updatedItem.setQuantity(2);
+			updatedItem.setPrice(6000.0);
 			Cart updatedCart = cartService.updateInCart(102, updatedItem);
 			assertThat(updatedCart.getListOfItems()).contains(updateItem);
 		}
@@ -219,7 +223,7 @@ class CartServiceImplTest {
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
 			when(cartRepository.findByCartId(any(Integer.class))).thenReturn(cart);
-			cartService.deleteFromCart(102, 101);
+			cartService.deleteFromCart(102, item);
 			InOrder inOrder = inOrder(cartRepository);
 			inOrder.verify(cartRepository, times(1)).findByCartId(any(Integer.class));
 			inOrder.verify(cartRepository, times(1)).save(any(Cart.class));	
@@ -236,7 +240,7 @@ class CartServiceImplTest {
 			items.remove(item);
 			cart = new Cart(102, items, 0.0);
 			when(cartRepository.save(any(Cart.class))).thenReturn(cart);
-			Cart deletedCart = cartService.deleteFromCart(102, 101);
+			Cart deletedCart = cartService.deleteFromCart(102, item);
 			assertThat(deletedCart.getListOfItems()).contains();
 		}
 		
@@ -253,8 +257,44 @@ class CartServiceImplTest {
 			items.remove(item1);
 			cart = new Cart(102, items, 34000.0);
 			when(cartRepository.save(any(Cart.class))).thenReturn(cart);
-			Cart deletedCart = cartService.deleteFromCart(102, 102);
+			Cart deletedCart = cartService.deleteFromCart(102, item1);
 			assertThat(deletedCart.getListOfItems()).doesNotContain(item1);
+		}
+	}
+	
+	@Nested
+	@DisplayName("Deleting all the items in the cart")
+	class ClearCartMethod{
+		
+		@Test
+		@DisplayName("Verification")
+		void testClearCart1() {
+			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			List<Item> items = new ArrayList<Item>();
+			items.add(item);
+			Cart cart = new Cart(102, items, 18000.0);
+			when(cartRepository.findByCartId(any(Integer.class))).thenReturn(cart);
+			cartService.clearCart(102);
+			InOrder inOrder = inOrder(cartRepository);
+			inOrder.verify(cartRepository, times(1)).findByCartId(any(Integer.class));
+			inOrder.verify(cartRepository, times(1)).save(any(Cart.class));	
+		}
+		
+		@Test
+		@DisplayName("Deleting every item in the cart")
+		void testDeleteFromCart3() {
+			Item item1 = new Item(102, "Phone", 16000.0, 1);
+			Item item2 = new Item(103, "Laptop", 34000.0, 1);
+			List<Item> items = new ArrayList<Item>();
+			items.add(item1);
+			items.add(item2);
+			Cart cart = new Cart(102, items, 50000.0);
+			when(cartRepository.findByCartId(any(Integer.class))).thenReturn(cart);
+			items.clear();
+			cart = new Cart(102, items, 0.0);
+			when(cartRepository.save(any(Cart.class))).thenReturn(cart);
+			Cart clearedCart = cartService.clearCart(102);
+			assertThat(clearedCart.getListOfItems()).contains();
 		}
 	}
 

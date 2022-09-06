@@ -48,7 +48,7 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testAddProduct() {
-			Product product = new Product(102, null, "Pen Drive", null, null, null, null, 0.0, null, null);
+			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.save(any(Product.class))).thenReturn(product);
 			Product addedProduct = productService.addProduct(product);
 			ReflectionAssert.assertReflectionEquals(product, addedProduct);
@@ -62,8 +62,8 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testGetAllProducts() {
-			Product product1 = new Product(102, null, "Pen Drive", null, null, null, null, 0.0, null, null);
-			Product product2 = new Product(102, null, "Speaker", null, null, null, null, 0.0, null, null);
+			Product product1 = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
+			Product product2 = new Product(102, null, "Speaker", null, 0, null, null, null, 0.0, null, null);
 			List<Product> products = new ArrayList<Product>();
 			products.add(product1);
 			products.add(product2);
@@ -80,7 +80,7 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testGetProductById() {
-			Product product = new Product(102, null, "Pen Drive", null, null, null, null, 0.0, null, null);
+			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.findByProductId(any(Integer.class))).thenReturn(product);
 			Product specificProduct = productService.getProductById(102);
 			ReflectionAssert.assertReflectionEquals(product, specificProduct);
@@ -94,7 +94,7 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testGetProductByName() {
-			Product product = new Product(102, null, "Pen Drive", null, null, null, null, 0.0, null, null);
+			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.findByProductName(any(String.class))).thenReturn(product);
 			Product specificProduct = productService.getProductByName("Pen Drive");
 			ReflectionAssert.assertReflectionEquals(product, specificProduct);
@@ -108,9 +108,9 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testUpdateProduct() {
-			Product product = new Product(102, null, "Pen Drive", null, null, null, null, 0.0, null, null);
+			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.findByProductId(any(Integer.class))).thenReturn(product);
-			Product newProduct = new Product(102, "Electronics", "Pen Drive", null, null, null, null, 0.0, null, null);
+			Product newProduct = new Product(102, "Electronics", "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.save(any(Product.class))).thenReturn(product);
 			Product updatedProduct = productService.updateProduct(newProduct);
 			ReflectionAssert.assertReflectionEquals(newProduct, updatedProduct);
@@ -136,7 +136,7 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testGetProductByCategory() {
-			Product product = new Product(102, null, "Pen Drive", "Electronics", null, null, null, 0.0, null, null);
+			Product product = new Product(102, null, "Pen Drive", "Electronics", 0, null, null, null, 0.0, null, null);
 			List<Product> products = new ArrayList<Product>();
 			products.add(product);
 			when(productRepository.findByCategory(any(String.class))).thenReturn(products);
@@ -152,7 +152,7 @@ class ProductServiceImplTest {
 		
 		@Test
 		void testGetProductByType() {
-			Product product = new Product(102, "Electronic Device", "Pen Drive", null, null, null, null, 0.0, null, null);
+			Product product = new Product(102, "Electronic Device", "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			List<Product> products = new ArrayList<Product>();
 			products.add(product);
 			when(productRepository.findByProductType(any(String.class))).thenReturn(products);

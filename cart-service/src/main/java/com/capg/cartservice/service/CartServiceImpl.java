@@ -42,7 +42,9 @@ public class CartServiceImpl implements CartService{
 		List<Item> items = cart.getListOfItems();
 		if(items == null) {
 			items = new ArrayList<Item>();
+			cart.setTotalPrice(0.0);
 		}
+		
 		items.add(new Item(newItem));
 		cart.setListOfItems(items);
 		cart.setTotalPrice(cart.getTotalPrice()+(newItem.getPrice()*newItem.getQuantity()));
@@ -81,6 +83,14 @@ public class CartServiceImpl implements CartService{
 		}
 		cart.setTotalPrice(cart.getTotalPrice() - (qty*delItem.getPrice()));
 		return cartRepository.save(cart);		
+	}
+
+	@Override
+	public Cart clearCart(Integer id) {
+		Cart cart = cartRepository.findByCartId(id);
+		cart.getListOfItems().clear();
+		cart.setTotalPrice(0.0);
+		return cartRepository.save(cart);
 	}
 
 }
