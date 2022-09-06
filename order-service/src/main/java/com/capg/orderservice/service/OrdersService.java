@@ -12,11 +12,11 @@ import com.capg.orderservice.model.Orders;
 public interface OrdersService {
 	
 	public abstract List<Orders> getAllOrders();
-	public abstract void placeOrder(Cart cart);
-	public abstract String changeStatus(String status, int orderId);
-	public abstract void deleteOrder(int orderId);
+	public abstract void placeOrder(Cart cart, String modeOfPayment);
+	public abstract String changeStatus(String status, String orderId);
+	public abstract void deleteOrder(String orderId);
 	public abstract List<Orders> getOrderByCustomerId(Integer customerId);
-	public abstract void storeAddress(Address address, int orderId);
-	public abstract Orders getOrderById(Integer orderId);
+	public abstract Orders storeAddress(Address address, String orderId);
+	public abstract Orders getOrderById(String orderId);
 
 }

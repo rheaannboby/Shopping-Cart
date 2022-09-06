@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.capg.orderservice.model.Orders;
 
 @Repository
-public interface OrderRepository extends MongoRepository<Orders, Integer> {
+public interface OrderRepository extends MongoRepository<Orders, String> {
 	List<Orders> findOrderByCustomerId(Integer id);
-	Orders findOrderByOrderId(Integer id);
+	Orders findOrderByOrderId(String id);
 	Orders findFirstByOrderByOrderIdDesc();
 }

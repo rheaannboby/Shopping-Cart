@@ -8,10 +8,6 @@ import lombok.ToString;
 
 public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString class Address {
 	
-	private String fullName;
-	
-	private Long mobileNumber;
-	
 	private int houseNumber;
 	
 	private String streetName;

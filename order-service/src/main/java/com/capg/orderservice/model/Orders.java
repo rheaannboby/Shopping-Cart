@@ -7,6 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import org.springframework.data.annotation.Transient;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +22,19 @@ public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString  class O
 	
 	@Id
 	@Field
-	private int orderId;
+	private String orderId;
 	
 	@Field
 	private LocalDate orderDate;
 	
 	@Field
 	private Integer customerId;
+	
+	@Transient
+	private String fullName;
+	
+	@Transient
+	private Long mobileNumber;
 	
 	@Field
 	private Double amountPaid;

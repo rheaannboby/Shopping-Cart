@@ -1,10 +1,12 @@
 package com.capg.orderservice.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.capg.orderservice.model.Address;
 import com.capg.orderservice.model.Cart;
@@ -18,24 +20,29 @@ public class OrdersServiceImpl implements OrdersService{
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	@Override
 	public List<Orders> getAllOrders() {
 		return orderRepository.findAll();
 	}
 
 	@Override
-	public void placeOrder(Cart cart) {
+	public void placeOrder(Cart cart, String modeOfPayment) {
+		int num = 0;
 		List<Orders> orders = cart.getListOfItems().stream().map(item -> 
 		{
 			Orders order = new Orders();
-			order.setOrderId(cart.getCartId());  // not correct
+			order.setOrderId(cart.getCartId().toString()+num);  // not correct
+			order.setOrderDate(LocalDate.now());
 			order.setCustomerId(cart.getCartId());   // not correct
 			order.setAmountPaid(item.getPrice()*item.getQuantity());
 			order.setOrderStatus("ORDERED");
 			order.setQuantity(item.getQuantity());
+			order.setModeOfPayment(modeOfPayment);
 			order.setProduct(new Product());
 			order.getProduct().setProductId(item.getItemId());
-			order.getProduct().setProductName(item.getProductName());
 			return order;
 		}).collect(Collectors.toList());
 		
@@ -46,7 +53,7 @@ public class OrdersServiceImpl implements OrdersService{
 	}
 
 	@Override
-	public String changeStatus(String status, int orderId) {
+	public String changeStatus(String status, String orderId) {
 		Orders order = orderRepository.findOrderByOrderId(orderId);
 		order.setOrderStatus(status);
 		orderRepository.save(order);
@@ -54,7 +61,7 @@ public class OrdersServiceImpl implements OrdersService{
 	}
 
 	@Override
-	public void deleteOrder(int orderId) {
+	public void deleteOrder(String orderId) {
 		orderRepository.deleteById(orderId);
 		
 	}
@@ -65,14 +72,14 @@ public class OrdersServiceImpl implements OrdersService{
 	}
 
 	@Override
-	public void storeAddress(Address address, int orderId) {
+	public Orders storeAddress(Address address, String orderId) {
 		Orders order = orderRepository.findOrderByOrderId(orderId);
 		order.setAddress(address);
-		orderRepository.save(order);
+		return orderRepository.save(order);
 	}
 
 	@Override
-	public Orders getOrderById(Integer orderId) {
+	public Orders getOrderById(String orderId) {
 		return orderRepository.findOrderByOrderId(orderId);
 	}
 
