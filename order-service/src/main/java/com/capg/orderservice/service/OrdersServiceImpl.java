@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.capg.orderservice.model.Address;
 import com.capg.orderservice.model.Cart;
 import com.capg.orderservice.model.Orders;
+import com.capg.orderservice.model.Product;
 import com.capg.orderservice.repository.OrderRepository;
 
 @Service
@@ -28,47 +29,52 @@ public class OrdersServiceImpl implements OrdersService{
 		{
 			Orders order = new Orders();
 			order.setOrderId(cart.getCartId());  // not correct
+			order.setCustomerId(cart.getCartId());   // not correct
 			order.setAmountPaid(item.getPrice()*item.getQuantity());
 			order.setOrderStatus("ORDERED");
 			order.setQuantity(item.getQuantity());
+			order.setProduct(new Product());
+			order.getProduct().setProductId(item.getItemId());
+			order.getProduct().setProductName(item.getProductName());
 			return order;
 		}).collect(Collectors.toList());
-		orders.stream().map(order ->
-		{
+		
+		for(Orders order : orders) {
+			System.err.println(order);
 			orderRepository.save(order);
-			return order;
-		}).close();
+		}
 		
 	}
 
 	@Override
 	public String changeStatus(String status, int orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		Orders order = orderRepository.findOrderByOrderId(orderId);
+		order.setOrderStatus(status);
+		orderRepository.save(order);
+		return order.getOrderStatus();
 	}
 
 	@Override
 	public void deleteOrder(int orderId) {
-		// TODO Auto-generated method stub
+		orderRepository.deleteById(orderId);
 		
 	}
 
 	@Override
 	public List<Orders> getOrderByCustomerId(Integer customerId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderRepository.findOrderByCustomerId(customerId);
 	}
 
 	@Override
-	public void storeAddress(Address address) {
-		// TODO Auto-generated method stub
-		
+	public void storeAddress(Address address, int orderId) {
+		Orders order = orderRepository.findOrderByOrderId(orderId);
+		order.setAddress(address);
+		orderRepository.save(order);
 	}
 
 	@Override
 	public Orders getOrderById(Integer orderId) {
-		// TODO Auto-generated method stub
-		return null;
+		return orderRepository.findOrderByOrderId(orderId);
 	}
 
 }

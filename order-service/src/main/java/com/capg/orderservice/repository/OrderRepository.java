@@ -10,5 +10,6 @@ import com.capg.orderservice.model.Orders;
 @Repository
 public interface OrderRepository extends MongoRepository<Orders, Integer> {
 	List<Orders> findOrderByCustomerId(Integer id);
+	Orders findOrderByOrderId(Integer id);
 	Orders findFirstByOrderByOrderIdDesc();
 }

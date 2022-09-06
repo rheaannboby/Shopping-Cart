@@ -16,7 +16,7 @@ public interface OrdersService {
 	public abstract String changeStatus(String status, int orderId);
 	public abstract void deleteOrder(int orderId);
 	public abstract List<Orders> getOrderByCustomerId(Integer customerId);
-	public abstract void storeAddress(Address address);
+	public abstract void storeAddress(Address address, int orderId);
 	public abstract Orders getOrderById(Integer orderId);
 
 }

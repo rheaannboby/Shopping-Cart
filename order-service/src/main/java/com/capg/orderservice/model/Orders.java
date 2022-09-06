@@ -13,11 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Document("order")
+@Document("orders")
 public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString  class Orders {
+
+	//@GeneratedValue( strategy = GenerationType.AUTO)
 	
 	@Id
-	//@GeneratedValue( strategy = GenerationType.AUTO)
 	@Field
 	private int orderId;
 	
