@@ -1,5 +1,8 @@
 package com.capg.cartservice;
 
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,6 +28,7 @@ public class CartServiceApplication{
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();	
 	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(CartServiceApplication.class, args);

@@ -13,14 +13,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Document("product")
 public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString class Product {
 	
-	@Id
-	@Field
 	private int productId;
-	
-	@Field
+
 	private String productType;
 	
 	@Field

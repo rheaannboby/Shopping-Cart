@@ -1,5 +1,6 @@
 package com.capg.productservice.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capg.productservice.model.Product;
 import com.capg.productservice.service.ProductService;
 
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/product")
 public class ProductController {
