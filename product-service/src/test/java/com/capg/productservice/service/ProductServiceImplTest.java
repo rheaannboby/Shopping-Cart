@@ -47,7 +47,17 @@ class ProductServiceImplTest {
 	class AddProductMethod{
 		
 		@Test
-		void testAddProduct() {
+		@DisplayName("Verification")
+		void testAddProduct1() {
+			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
+			productService.addProduct(product);
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).save(product);
+		}
+		
+		@Test
+		@DisplayName("Add a product")
+		void testAddProduct2() {
 			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.save(any(Product.class))).thenReturn(product);
 			Product addedProduct = productService.addProduct(product);
@@ -61,7 +71,16 @@ class ProductServiceImplTest {
 	class GetAllProductsMethod{
 		
 		@Test
-		void testGetAllProducts() {
+		@DisplayName("Verification")
+		void testGetAllProducts1() {
+			productService.getAllProducts();
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).findAll();
+		}
+		
+		@Test
+		@DisplayName("Fetch all the products")
+		void testGetAllProducts2() {
 			Product product1 = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			Product product2 = new Product(102, null, "Speaker", null, 0, null, null, null, 0.0, null, null);
 			List<Product> products = new ArrayList<Product>();
@@ -79,7 +98,16 @@ class ProductServiceImplTest {
 	class GetAllProductByIDMethod{
 		
 		@Test
-		void testGetProductById() {
+		@DisplayName("Verification")
+		void testGetProductById1() {
+			productService.getProductById(102);
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).findByProductId(any(Integer.class));
+		}
+		
+		@Test
+		@DisplayName("Get a particular product using ID")
+		void testGetProductById2() {
 			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.findByProductId(any(Integer.class))).thenReturn(product);
 			Product specificProduct = productService.getProductById(102);
@@ -93,7 +121,16 @@ class ProductServiceImplTest {
 	class GetProductByNameMethod{
 		
 		@Test
-		void testGetProductByName() {
+		@DisplayName("Verification")
+		void testGetProductByName1() {
+			productService.getProductByName("Earphones");
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).findByProductName(any(String.class));
+		}
+		
+		@Test
+		@DisplayName("Get a particular product using it's name")
+		void testGetProductByName2() {
 			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.findByProductName(any(String.class))).thenReturn(product);
 			Product specificProduct = productService.getProductByName("Pen Drive");
@@ -107,7 +144,19 @@ class ProductServiceImplTest {
 	class UpdateProductMethod{
 		
 		@Test
-		void testUpdateProduct() {
+		@DisplayName("Verification")
+		void testUpdateProduct1() {
+			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
+			when(productRepository.findByProductId(any(Integer.class))).thenReturn(product);
+			productService.updateProduct(product);
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).findByProductId(any(Integer.class));
+			inOrder.verify(productRepository, times(1)).save(any(Product.class));
+		}
+		
+		@Test
+		@DisplayName("Update a product")
+		void testUpdateProduct2() {
 			Product product = new Product(102, null, "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			when(productRepository.findByProductId(any(Integer.class))).thenReturn(product);
 			Product newProduct = new Product(102, "Electronics", "Pen Drive", null, 0, null, null, null, 0.0, null, null);
@@ -135,7 +184,16 @@ class ProductServiceImplTest {
 	class GetProductByCategoryMethod{
 		
 		@Test
-		void testGetProductByCategory() {
+		@DisplayName("Verification")
+		void testGetProductByCategory1() {
+			productService.getProductByCategory("Electronics");
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).findByCategory(any(String.class));
+		}
+		
+		@Test
+		@DisplayName("Get a particular product using it's category")
+		void testGetProductByCategory2() {
 			Product product = new Product(102, null, "Pen Drive", "Electronics", 0, null, null, null, 0.0, null, null);
 			List<Product> products = new ArrayList<Product>();
 			products.add(product);
@@ -151,7 +209,16 @@ class ProductServiceImplTest {
 	class GetProductByTypeMethod{
 		
 		@Test
-		void testGetProductByType() {
+		@DisplayName("Verification")
+		void testGetProductByType1() {
+			productService.getProductByType("Electronic Device");
+			InOrder inOrder = inOrder(productRepository);
+			inOrder.verify(productRepository, times(1)).findByProductType(any(String.class));
+		}
+		
+		@Test
+		@DisplayName("Get a particular product using it's category")
+		void testGetProductByType2() {
 			Product product = new Product(102, "Electronic Device", "Pen Drive", null, 0, null, null, null, 0.0, null, null);
 			List<Product> products = new ArrayList<Product>();
 			products.add(product);
