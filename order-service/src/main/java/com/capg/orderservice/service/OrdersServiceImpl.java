@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.capg.orderservice.model.Address;
 import com.capg.orderservice.model.Cart;
+import com.capg.orderservice.model.Items;
 import com.capg.orderservice.model.Orders;
 import com.capg.orderservice.model.Product;
 import com.capg.orderservice.repository.OrderRepository;
@@ -30,11 +31,11 @@ public class OrdersServiceImpl implements OrdersService{
 
 	@Override
 	public void placeOrder(Cart cart, String modeOfPayment) {
-		int num = 0;
+		List<Items> items = cart.getListOfItems();
 		List<Orders> orders = cart.getListOfItems().stream().map(item -> 
 		{
 			Orders order = new Orders();
-			order.setOrderId(cart.getCartId().toString()+num);  // not correct
+			order.setOrderId(cart.getCartId().toString()+items.indexOf(item));  // not correct
 			order.setOrderDate(LocalDate.now());
 			order.setCustomerId(cart.getCartId());   // not correct
 			order.setAmountPaid(item.getPrice()*item.getQuantity());
@@ -56,8 +57,8 @@ public class OrdersServiceImpl implements OrdersService{
 	public String changeStatus(String status, String orderId) {
 		Orders order = orderRepository.findOrderByOrderId(orderId);
 		order.setOrderStatus(status);
-		orderRepository.save(order);
-		return order.getOrderStatus();
+		Orders orders = orderRepository.save(order);
+		return orders.getOrderStatus();
 	}
 
 	@Override
