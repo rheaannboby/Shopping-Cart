@@ -1,9 +1,9 @@
-package com.capg.cartservice.security;
+package com.capg.cartservice.config;
 
-//not required
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -16,26 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-//@Configuration
-//@EnableWebSecurity
-public class SecuirtyConfig {
-	/*
-	@Bean
-    public UserDetailsService users() {
-        UserDetails admin = User.builder()
-            .username("admin")
-            .password(passwordEncoder().encode("password"))
-            .roles("ADMIN")
-            .build();
-        UserDetails user = User.builder()
-                .username("user")
-                .password(passwordEncoder().encode("pass"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user,admin);
-    }
-    */
+import com.capg.cartservice.security.UserDetailsServiceImpl;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
 	
 	@Bean
     public UserDetailsService users() {
@@ -44,16 +31,28 @@ public class SecuirtyConfig {
     	
 	@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		
 		http
 		.csrf()
 		.disable()
 		.authorizeHttpRequests()
 		.antMatchers("/cart/{cartId}").hasRole("CUSTOMER")
+		.antMatchers("/cart/{cartId}/items").hasRole("CUSTOMER")
+		.antMatchers(HttpMethod.POST,"/cart").hasRole("CUSTOMER")
+		.antMatchers(HttpMethod.PUT,"/cart").hasRole("CUSTOMER")
+		.antMatchers(HttpMethod.DELETE,"/cart").hasRole("CUSTOMER")
 		.anyRequest().authenticated()
 		.and()
-		 .formLogin()
-		.and()
+		.formLogin().permitAll()
+        .and()
+        .logout()
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessUrl("/login")
+        .deleteCookies("JSESSIONID")
+        .invalidateHttpSession(true)
+        .and()
+        .exceptionHandling()
+        //.accessDeniedHandler(new CustomAccessDeniedHandler())
+        .and()
         .httpBasic();
 		
 		http.authenticationProvider(daoAuthenticationProvider());
@@ -64,7 +63,7 @@ public class SecuirtyConfig {
 	public DaoAuthenticationProvider daoAuthenticationProvider(){
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setUserDetailsService(users());
-		provider.setPasswordEncoder(passwordEncoder());
+		provider.setPasswordEncoder(new BCryptPasswordEncoder());
 		return provider;
 	}
 	
@@ -73,10 +72,6 @@ public class SecuirtyConfig {
 		return configuration.getAuthenticationManager();
 	}
 	
-	@Bean 
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 	
 
 }
