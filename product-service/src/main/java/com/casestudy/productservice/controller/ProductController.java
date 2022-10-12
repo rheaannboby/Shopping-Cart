@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.casestudy.productservice.model.Product;
 import com.casestudy.productservice.service.ProductService;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -39,6 +38,11 @@ public class ProductController {
 		return productService.getProductById(id);
 	}
 	
+	@GetMapping("/qty/{productId}")
+	public Integer getProductQtyById(@PathVariable(value="productId") int id){
+		return productService.getProductQtyById(id);
+	}
+	
 	@GetMapping("/name/{productName}")
 	public Product getProductByName(@PathVariable(value="productName") String name){
 		return productService.getProductByName(name);
@@ -47,6 +51,11 @@ public class ProductController {
 	@PutMapping
 	public Product updateProduct(@RequestBody Product product){
 		return productService.updateProduct(product);
+	}
+	
+	@PutMapping("/qty")
+	public Product updateProductQty(@RequestBody Product product){
+		return productService.updateProductQty(product);
 	}
 	
 	@DeleteMapping("/{productId}")

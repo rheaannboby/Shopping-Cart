@@ -6,6 +6,12 @@ spring:
     name: spring-cloud-gateway
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
       routes:
       - id: cartService
         uri: lb://CART-SERVICE
@@ -23,9 +29,6 @@ spring:
         uri: lb://ORDERS-SERVICE
         predicates:
         - Path=/orders/**
-      httpclient:
-        connect-timeout: 1000
-        response-timeout: 5s
         
 management.endpoints.web.exposure.include: "*"
 management:

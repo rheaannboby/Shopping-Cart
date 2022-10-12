@@ -12,5 +12,7 @@ public interface ProfileRepository extends MongoRepository<UserProfile, Integer>
 	
 	public UserProfile findByMobileNumber(Long mobileNumber);
 	public UserProfile findByFullName(String fullName);
+	public UserProfile findByEmailId(String emailId);
+	public Boolean existsByEmailId(String emailId);
 	public UserProfile findByProfileId(int Id);
 }

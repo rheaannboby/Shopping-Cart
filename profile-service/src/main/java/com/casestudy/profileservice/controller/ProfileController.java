@@ -3,6 +3,7 @@ package com.casestudy.profileservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,6 +67,16 @@ public class ProfileController {
 	@GetMapping("/name/{userName}")
 	public UserProfile getByUserName(@PathVariable(value="userName") String userName) {
 		return profileService.getByUserName(userName);
+	}
+	
+	@GetMapping("/email/{emailId}")
+	public UserProfile getByUserEmail(@PathVariable(value="emailId") String emailId) {
+		return profileService.getByUserEmail(emailId);
+	}
+	
+	@GetMapping("/exists/{emailId}")
+	public Boolean existsByEmail(@PathVariable(value="emailId") String emailId) {
+		return profileService.existsByEmail(emailId);
 	}
 
 }

@@ -18,5 +18,7 @@ public interface ProfileService {
 	public abstract UserProfile addNewDeliveryProfile(UserProfile user);
 	public abstract UserProfile findByMobileNumber(Long mobileNumber);
 	public abstract UserProfile getByUserName(String name);
+	public abstract UserProfile getByUserEmail(String emailId);
+	public abstract Boolean existsByEmail(String emailId);
 
 }

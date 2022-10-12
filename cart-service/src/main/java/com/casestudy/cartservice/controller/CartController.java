@@ -3,6 +3,7 @@ package com.casestudy.cartservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ public class CartController {
 				Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/product/id/"+item.getItemId(), Product.class);
 				item.setProductName(product.getProductName());
 				item.setPrice(product.getPrice());
+				item.setImage(product.getImage());
 		});
 		return cart;
 	}
@@ -65,9 +67,12 @@ public class CartController {
 		cartService.updateInCart(id,item);
 	}
 	
-	@DeleteMapping("/{cartId}")
-	public void deleteFromCart(@PathVariable(value = "cartId") Integer id,@RequestBody Item item){
-		Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/product/id/"+item.getItemId(), Product.class);
+	@DeleteMapping("/{cartId}/{itemId}")
+	public void deleteFromCart(@PathVariable(value = "cartId") Integer id,@PathVariable(value = "itemId") Integer itemId){
+		Item item = new Item();
+		System.err.println("Delete : " +itemId);
+		Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/product/id/"+itemId, Product.class);
+		item.setItemId(itemId);
 		item.setPrice(product.getPrice());
 		cartService.deleteFromCart(id,item);
 	}

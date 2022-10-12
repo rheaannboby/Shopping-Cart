@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -35,7 +36,8 @@ public class OrdersServiceImpl implements OrdersService{
 		List<Orders> orders = cart.getListOfItems().stream().map(item -> 
 		{
 			Orders order = new Orders();
-			order.setOrderId(cart.getCartId().toString()+items.indexOf(item));  // not correct
+			//order.setOrderId(cart.getCartId().toString()+items.indexOf(item));  // not correct
+			order.setOrderId((new ObjectId()).toString());
 			order.setOrderDate(LocalDate.now());
 			order.setCustomerId(cart.getCartId());   // not correct
 			order.setAmountPaid(item.getPrice()*item.getQuantity());

@@ -3,6 +3,7 @@ package com.casestudy.orderservice.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class OrderController {
 			Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/product/id/"+order.getProduct().getProductId(), Product.class);
 			order.getProduct().setProductName(product.getProductName());
 			order.getProduct().setPrice(product.getPrice());
+			System.err.println(order.getProduct());
 			UserProfile profile = restTemplate.getForObject("http://PROFILE-SERVICE/profile/"+order.getCustomerId(), UserProfile.class);
 			order.setFullName(profile.getFullName());
 			order.setMobileNumber(profile.getMobileNumber());
@@ -66,6 +68,7 @@ public class OrderController {
 		orders.forEach(order ->{
 			Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/product/id/"+order.getProduct().getProductId(), Product.class);
 			order.getProduct().setProductName(product.getProductName());
+			order.getProduct().setPrice(product.getPrice());
 			UserProfile profile = restTemplate.getForObject("http://PROFILE-SERVICE/profile/"+order.getCustomerId(), UserProfile.class);
 			order.setFullName(profile.getFullName());
 			order.setMobileNumber(profile.getMobileNumber());
@@ -88,6 +91,7 @@ public class OrderController {
 		Orders order = orderService.getOrderById(orderId);
 		Product product = restTemplate.getForObject("http://PRODUCT-SERVICE/product/id/"+order.getProduct().getProductId(), Product.class);
 		order.getProduct().setProductName(product.getProductName());
+		order.getProduct().setPrice(product.getPrice());
 		UserProfile profile = restTemplate.getForObject("http://PROFILE-SERVICE/profile/"+order.getCustomerId(), UserProfile.class);
 		order.setFullName(profile.getFullName());
 		order.setMobileNumber(profile.getMobileNumber());

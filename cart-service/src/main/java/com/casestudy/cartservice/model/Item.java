@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
+
 import org.springframework.data.annotation.Transient;
 
 public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString class Item {
@@ -16,6 +19,9 @@ public @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString class It
 	
 	@Transient
 	private Double price;
+	
+	@Transient
+	private List<String> image;
 	
 	private Integer quantity;
 	

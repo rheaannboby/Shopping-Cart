@@ -44,7 +44,7 @@ public class CartServiceApplicationTests {
 	@DisplayName("Add the first valid item onto a new cart")
 	public void addToCartTest1() {
 		repository = mock(CartRepository.class);
-		Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+		Item item = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
 		List<Item> items = new ArrayList<Item>();
 		items.add(item);
 		Cart cart = new Cart(102, items, 18000.0);
@@ -58,8 +58,8 @@ public class CartServiceApplicationTests {
 	@Test
 	@DisplayName("Add the a valid item onto a cart which already has items")
 	public void addToCartTest2() {
-		Item item1 = new Item(102, "Bluetooth speaker", 6000.0, 3);
-		Item item2 = new Item(103, "Headphones", 6000.0, 1);
+		Item item1 = new Item(102, "Bluetooth speaker", 6000.0, null, 3);
+		Item item2 = new Item(103, "Headphones", 6000.0, null, 1);
 		List<Item> items = new ArrayList<Item>();
 		items.add(item1);
 		Cart cart = new Cart(402, items, 18000.0);

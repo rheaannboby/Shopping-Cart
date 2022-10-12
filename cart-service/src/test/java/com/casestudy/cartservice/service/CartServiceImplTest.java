@@ -59,7 +59,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Get the cart details by passing valid cart ID")
 		void testGetCartById2() {
-			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item item = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -76,7 +76,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Verification")
 		void testGetAllItems1() {
-			Item item1 = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item item1 = new Item(101, "Bluetooth speaker", 6000.0,null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item1);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -89,8 +89,8 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Get the items in a cart by passing valid cart ID")
 		void testGetAllItems2() {
-			Item item1 = new Item(101, "Bluetooth speaker", 6000.0, 3);
-			Item item2 = new Item(102, "Phone", 12000.0, 1);
+			Item item1 = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
+			Item item2 = new Item(102, "Phone", 12000.0,null, 1);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item1);
 			items.add(item2);
@@ -108,7 +108,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Verifying if methods are called in order 1")
 		void testAddToCart1() {
-			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, null,3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(newItem);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -123,7 +123,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Verifying if methods are called in order 2")
 		void testAddToCart2() {
-			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(newItem);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -139,7 +139,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Adding item to a new cart")
 		void testAddToCart3() {
-			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item newItem = new Item(101, "Bluetooth speaker", 6000.0,null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(newItem);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -154,9 +154,9 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Adding an item to an existing cart")
 		void testAddToCart4() {
-			Item newItem = new Item(101, "Bluetooth speaker", 6000.0, 3);
-			Item item1 = new Item(102, "Phone", 16000.0, 1);
-			Item item2 = new Item(103, "Laptop", 34000.0, 1);
+			Item newItem = new Item(101, "Bluetooth speaker", 6000.0,null, 3);
+			Item item1 = new Item(102, "Phone", 16000.0,null, 1);
+			Item item2 = new Item(103, "Laptop", 34000.0,null, 1);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item1);
 			items.add(item2);
@@ -178,7 +178,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Verifying if methods are called in order 1")
 		void testUpdateInCart1() {
-			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item item = new Item(101, "Bluetooth speaker", 6000.0,null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -192,8 +192,8 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Updating the quantity of an item")
 		void testUpdateInCart2() {
-			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
-			Item updateItem = new Item(101, "Bluetooth speaker", 6000.0, 2);
+			Item item = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
+			Item updateItem = new Item(101, "Bluetooth speaker", 6000.0, null,2);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -219,7 +219,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Verification")
 		void testDeleteFromCart1() {
-			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item item = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -233,7 +233,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Deleting the last item in the cart")
 		void testDeleteFromCart2() {
-			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item item = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -248,8 +248,8 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Deleting an item in the cart")
 		void testDeleteFromCart3() {
-			Item item1 = new Item(102, "Phone", 16000.0, 1);
-			Item item2 = new Item(103, "Laptop", 34000.0, 1);
+			Item item1 = new Item(102, "Phone", 16000.0, null, 1);
+			Item item2 = new Item(103, "Laptop", 34000.0, null, 1);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item1);
 			items.add(item2);
@@ -270,7 +270,7 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Verification")
 		void testClearCart1() {
-			Item item = new Item(101, "Bluetooth speaker", 6000.0, 3);
+			Item item = new Item(101, "Bluetooth speaker", 6000.0, null, 3);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item);
 			Cart cart = new Cart(102, items, 18000.0);
@@ -284,8 +284,8 @@ class CartServiceImplTest {
 		@Test
 		@DisplayName("Deleting every item in the cart")
 		void testDeleteFromCart3() {
-			Item item1 = new Item(102, "Phone", 16000.0, 1);
-			Item item2 = new Item(103, "Laptop", 34000.0, 1);
+			Item item1 = new Item(102, "Phone", 16000.0, null, 1);
+			Item item2 = new Item(103, "Laptop", 34000.0, null, 1);
 			List<Item> items = new ArrayList<Item>();
 			items.add(item1);
 			items.add(item2);

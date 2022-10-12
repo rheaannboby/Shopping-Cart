@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.casestudy.profileservice.model.Role;
 import com.casestudy.profileservice.model.UserProfile;
 import com.casestudy.profileservice.repository.ProfileRepository;
 
@@ -16,6 +17,7 @@ public class ProfileServiceImpl implements ProfileService{
 
 	@Override
 	public UserProfile addNewCustomerProfile(UserProfile user) {
+		user.setRole(Role.Customer);
 		return profileRepository.save(user);
 	}
 
@@ -52,11 +54,13 @@ public class ProfileServiceImpl implements ProfileService{
 
 	@Override
 	public UserProfile addNewMerchantProfile(UserProfile user) {
+		user.setRole(Role.Merchant);
 		return profileRepository.save(user);
 	}
 
 	@Override
 	public UserProfile addNewDeliveryProfile(UserProfile user) {
+		user.setRole(Role.DeliveryAgent);
 		return profileRepository.save(user);
 	}
 
@@ -68,6 +72,16 @@ public class ProfileServiceImpl implements ProfileService{
 	@Override
 	public UserProfile getByUserName(String name) {
 		return profileRepository.findByFullName(name);
+	}
+
+	@Override
+	public UserProfile getByUserEmail(String emailId) {
+		return profileRepository.findByEmailId(emailId);
+	}
+
+	@Override
+	public Boolean existsByEmail(String emailId) {
+		return profileRepository.existsByEmailId(emailId);
 	}
 
 }

@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService{
 		product.setProductType(updatedProduct.getProductType());
 		product.setRating(updatedProduct.getRating());
 		product.setReview(updatedProduct.getReview());
+		product.setQuantity(updatedProduct.getQuantity());
 		product.setSpecification(updatedProduct.getSpecification());
 		return productRepository.save(product);
 	}
@@ -64,4 +65,17 @@ public class ProductServiceImpl implements ProductService{
 		return productRepository.findByProductType(productType);
 	}
 
+	@Override
+	public Product updateProductQty(Product updatedProduct) {
+		Product product = productRepository.findByProductId(updatedProduct.getProductId());
+		product.setQuantity(updatedProduct.getQuantity());
+		return productRepository.save(product);
+	}
+
+	@Override
+	public Integer getProductQtyById(int productId) {
+		Product product = productRepository.findByProductId(productId);
+		return product.getQuantity();
+	}
+	
 }
